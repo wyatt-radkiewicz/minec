@@ -7,3 +7,6 @@ compile_commands.json
 # OS specific
 .DS_Store
 thumbs.db
+
+# Other
+.cache/
