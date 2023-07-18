@@ -86,12 +86,18 @@ int main(int argc, char **argv) {
 
         // Move the camera
         cam.xrot -= window.mouse_dy;
+        if (cam.xrot > M_PI_2) {
+            cam.xrot = M_PI_2;
+        } else if (cam.xrot < -M_PI_2) {
+            cam.xrot = -M_PI_2;
+        }
         cam.yrot -= window.mouse_dx;
         
         vec3 cam_normal = { 0.0f, 0.0f, -1.0f }, cam_tangent;
         glm_vec3_rotate(cam_normal, cam.xrot, (vec3){ 1.0f, 0.0f, 0.0f });
         glm_vec3_rotate(cam_normal, cam.yrot, (vec3){ 0.0f, 1.0f, 0.0f });
         glm_vec3_cross(cam_normal, (vec3){ 0.0f, 1.0f, 0.0f }, cam_tangent);
+        glm_vec3_normalize(cam_tangent);
         glm_vec3_scale(cam_normal, movespd, cam_normal);
         glm_vec3_add(cam_normal, cam.pos, cam.pos);
         glm_vec3_scale(cam_tangent, -movespd2, cam_tangent);
